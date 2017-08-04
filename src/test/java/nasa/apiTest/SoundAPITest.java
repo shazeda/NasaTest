@@ -24,7 +24,6 @@ public class SoundAPITest {
         Assert.assertEquals(response.getStatus(), 200);
         Assert.assertEquals(response.getBody().getObject().get("count"), 5);
 
-
     }
 
     @Test
@@ -54,8 +53,47 @@ public class SoundAPITest {
 
     }
 
+    @Test
+    //Test Case ID: 4
+    public void testWithMars() throws Exception {
+
+        HttpResponse<JsonNode> response = Unirest.get(url + "?q=mars&limit=9&api_key=DEMO_KEY").asJson();
+        print(response.getStatus());
+        print(response.getBody());
+
+        Assert.assertEquals(response.getStatus(), 200);
+        Assert.assertEquals(response.getBody().getObject().get("count"), 9);
+        Assert.assertTrue(response.getBody().toString().contains("mars"));
+
+    }
+
+    @Test
+    //Test Case ID: 5
+    public void testWithoutQParameter() throws Exception {
+        HttpResponse<JsonNode> response = Unirest.get(url + "?limit=5&api_key=DEMO_KEY").asJson();
+        print(response.getStatus());
+        print(response.getBody());
+
+        Assert.assertEquals(response.getStatus(), 200);
+        Assert.assertEquals(response.getBody().getObject().get("count"), 5);
+
+    }
+
+
+    @Test
+    //Test Case ID: 6
+    public void testWithDefaultLimit() throws Exception {
+        HttpResponse<JsonNode> response = Unirest.get(url + "?api_key=DEMO_KEY").asJson();
+        print(response.getStatus());
+        print(response.getBody());
+
+        Assert.assertEquals(response.getStatus(), 200);
+        Assert.assertEquals(response.getBody().getObject().get("count"), 10);
+
+    }
+
+
     public void print(Object obj) {
         System.out.println(obj);
     }
-
 }
